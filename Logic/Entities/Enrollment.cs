@@ -13,14 +13,11 @@ public class Enrollment : Entity
     
     public Enrollment() { }
 
-    public Enrollment(Student student, Course course, Grade grade)
-        : this()
+    public Enrollment(Student student, Course course, Grade grade) : this()
     {
         StudentId = student.Id;
         Student = student;
-        
         Course = course;
-        
         Grade = grade;
     }
 

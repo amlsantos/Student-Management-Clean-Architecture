@@ -17,6 +17,6 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
         builder.HasMany<Enrollment>(s => s.Enrollments).WithOne(e => e.Student);
         builder.HasMany<Disenrollment>(s => s.Disenrollments).WithOne(e => e.Student);
 
-        builder.HasData(DbInitializer.Students);
+        builder.HasData(StudentDbInitializer.Students);
     }
 }

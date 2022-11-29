@@ -14,6 +14,6 @@ public class CourseConfiguration : IEntityTypeConfiguration<Course>
         builder.Property(c => c.Name).HasMaxLength(30);
         builder.Property(c => c.Credits).HasMaxLength(3);
         
-        builder.HasData(DbInitializer.Courses);
+        builder.HasData(StudentDbInitializer.Courses);
     }
 }

@@ -11,4 +11,10 @@
       <PackageReference Include="NHibernate" Version="5.4.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="CSharpFunctionalExtensions">
+        <HintPath>..\..\..\.nuget\packages\csharpfunctionalextensions\2.37.0\lib\net6.0\CSharpFunctionalExtensions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Database;
 using StudentManagementSystem.Entities;
@@ -13,18 +14,25 @@ public class CourseRepository : ICourseRepository
 
     public async Task<IEnumerable<Course>> GetAll() => await _context.Courses.ToListAsync();
 
-    public async Task<Course> GetByName(string name)
+    public async Task<Maybe<Course>> GetByName(string name)
     {
-        return await _context
+        var course = await _context
             .Courses
-            .FirstOrDefaultAsync(
-                c => c.Name.ToLower().Contains(name.ToLower()));
+            .FirstOrDefaultAsync(c => c.Name.ToLower().Contains(name.ToLower()));
+        
+        return Maybe.From<Course>(course);
     }
 
-    public async Task Save(Course course)
+    public async Task<Maybe<Course>> GetById(Guid id)
     {
-        await _context.Courses.AddAsync(course);
+        var course = await _context
+            .Courses
+            .FirstOrDefaultAsync(c => c.Id == id);
+        
+        return Maybe.From<Course>(course);
     }
+
+    public async Task AddAsync(Course course) => await _context.Courses.AddAsync(course);
 
     public Task Delete(Course course)
     {

@@ -1,6 +1,10 @@
 using System.Text.Json.Serialization;
 using Api.Utils;
 using Application.Interfaces;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using MediatR;
+using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Database;
 using Persistence.Repositories;
@@ -16,6 +20,7 @@ public static class Program
         var services = builder.Services;
         ConfigureServices(services);
         ConfigureDi(services);
+        ConfigureMediatr(services);
         
         var app = builder.Build();
         RunMigrations(app);
@@ -40,7 +45,15 @@ public static class Program
         services.AddScoped<IEnrollmentRepository,EnrollmentRepository>();
         services.AddScoped<ICourseRepository, CourseRepository>();
     }
-    
+
+    private static void ConfigureMediatr(IServiceCollection services)
+    {
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+        services.AddMediatR(assemblies);
+        services.AddFluentValidation(assemblies);
+    }
+
     private static void RunMigrations(WebApplication app)
     {
         using var scope = app.Services.CreateScope();

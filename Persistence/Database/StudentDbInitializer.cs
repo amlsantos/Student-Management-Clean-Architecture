@@ -2,7 +2,7 @@
 
 namespace Persistence.Database;
 
-public static class DbInitializer
+public static class StudentDbInitializer
 {
     public static readonly IEnumerable<Student> Students = new List<Student>
     {

@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Database;
 using StudentManagementSystem.Entities;
@@ -16,9 +17,18 @@ public class StudentRepository : IStudentRepository
         return await _context.Students.ToListAsync();
     }
 
-    public async Task<Student> GetById(Guid id) => await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
+    public async Task<Maybe<Student>> GetById(Guid id)
+    {
+        var student = await _context
+            .Students
+            .Include(s => s.Enrollments)
+            .ThenInclude(e => e.Course)
+            .FirstOrDefaultAsync(s => s.Id == id);
 
-    public async Task<IEnumerable<Student>> GetList(string enrolledIn, int? numberOfCourses)
+        return Maybe<Student>.From(student);
+    }
+
+    public async Task<IEnumerable<Student>> GetStudentsWithCourses(string? enrolledIn, int? numberOfCourses)
     {
         var enrollments = await _context.Enrollments
             .Include(e => e.Course)
@@ -33,10 +43,9 @@ public class StudentRepository : IStudentRepository
         }
 
         var result = enrollments.Select(e => e.Student).ToList();
-        if (numberOfCourses != null)
-        {
+        
+        if (numberOfCourses.HasValue) 
             result = result.Where(x => x.Enrollments.Count == numberOfCourses).ToList();
-        }
 
         return result;
     }

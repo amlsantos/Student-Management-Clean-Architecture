@@ -1,4 +1,5 @@
-﻿using StudentManagementSystem.Common;
+﻿using CSharpFunctionalExtensions;
+using Entity = StudentManagementSystem.Common.Entity;
 
 namespace StudentManagementSystem.Entities;
 
@@ -10,41 +11,39 @@ public class Student : Entity
     private readonly IList<Enrollment> _enrollments = new List<Enrollment>();
     public virtual IReadOnlyList<Enrollment> Enrollments => _enrollments.ToList();
     
-    public virtual Enrollment FirstEnrollment => GetEnrollment(0);
-    public virtual Enrollment SecondEnrollment => GetEnrollment(1);
+    public virtual Maybe<Enrollment> FirstEnrollment => GetEnrollment(0);
+    public virtual Maybe<Enrollment> SecondEnrollment => GetEnrollment(1);
     
 
     private readonly IList<Disenrollment> _disenrollments = new List<Disenrollment>();
     public virtual IReadOnlyList<Disenrollment> Disenrollments => _disenrollments.ToList();
 
-    public Student()
-    {
-    }
+    public Student() { }
 
-    public Student(string name, string email)
-        : this()
+    public Student(string name, string email) : this()
     {
         Name = name;
         Email = email;
     }
 
-    private Enrollment GetEnrollment(int index)
+    public Maybe<Enrollment> GetEnrollment(int index)
     {
         if (_enrollments.Count > index)
-            return _enrollments[index];
+            return Maybe<Enrollment>.From(_enrollments[index]);
 
-        return null;
+        return Maybe<Enrollment>.None;
     }
 
-    public virtual void RemoveEnrollment(Enrollment enrollment)
+    public virtual void RemoveEnrollment(Enrollment enrollment, string comment)
     {
         _enrollments.Remove(enrollment);
+        CreateDisenrollment(enrollment, comment);
     }
 
-    public virtual void AddDisenrollmentComment(Enrollment enrollment, string comment)
+    public virtual void CreateDisenrollment(Enrollment enrollment, string comment)
     {
-        var disenrollment = new Disenrollment(enrollment.Student, enrollment.Course, comment);
-        _disenrollments.Add(disenrollment);
+        _disenrollments.Add(
+            new Disenrollment(enrollment.Student, enrollment.Course, comment));
     }
 
     public virtual void Enroll(Course course, Grade grade)

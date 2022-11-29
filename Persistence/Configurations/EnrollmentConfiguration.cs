@@ -14,6 +14,6 @@ public class EnrollmentConfiguration : IEntityTypeConfiguration<Enrollment>
         builder.HasOne<Student>(e => e.Student).WithMany(s => s.Enrollments);
         builder.HasOne<Course>(e => e.Course);
         
-        builder.HasData(DbInitializer.Enrollments);
+        builder.HasData(StudentDbInitializer.Enrollments);
     }
 }
