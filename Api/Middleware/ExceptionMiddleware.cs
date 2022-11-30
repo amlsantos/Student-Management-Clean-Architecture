@@ -1,6 +1,7 @@
 ﻿using System.Net;
+using Api.Utils;
 
-namespace Api.Utils;
+namespace Api.Middleware;
 
 public class ExceptionMiddleware
 {

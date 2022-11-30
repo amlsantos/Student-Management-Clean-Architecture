@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Api.Middleware;
 using Api.Utils;
 using Application.Interfaces;
 using FluentValidation;

@@ -6,7 +6,7 @@ namespace Application.UseCases.Students.Queries.GetAll;
 
 public record GetStudentsQuery : IRequest<List<GetStudentsResponse>>
 {
-    public string EnrolledIn { get; init; }
+    public string? EnrolledIn { get; init; }
     public int? NumberOfCourses { get; init; }
 }
 

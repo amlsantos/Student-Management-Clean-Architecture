@@ -24,7 +24,7 @@ public class StudentsController : ControllerBase
     {
         var query = new GetStudentsQuery { EnrolledIn = enrolled, NumberOfCourses = number };
         var response = await _mediator.Send(query);
-        
+
         return Ok(response);
     }
 
@@ -42,9 +42,7 @@ public class StudentsController : ControllerBase
         };
 
         var response = await _mediator.Send(command);
-        return response.IsFailure ? 
-            BadRequest(response.Error) : 
-            Ok(response.Value);
+        return response.IsFailure ? BadRequest(response.Error) : Ok();
     }
 
     [HttpDelete("{id}")]
@@ -52,10 +50,8 @@ public class StudentsController : ControllerBase
     {
         var command = new UnregisterStudentCommand { Id = id };
         var response = await _mediator.Send(command);
-        
-        return response.IsFailure ? 
-            BadRequest(response.Error) :
-            Ok(response.Value);
+
+        return response.IsFailure ? BadRequest(response.Error) : Ok(response.Value);
     }
 
     [HttpPost("{id}/enrollments")]
@@ -64,9 +60,7 @@ public class StudentsController : ControllerBase
         var command = new StudentEnrollCommand { Id = id, Course = request.Course, Grade = request.Grade };
         var response = await _mediator.Send(command);
 
-        return response.IsFailure ? 
-            BadRequest(response.Error) :
-            Ok(response.Value);
+        return response.IsFailure ? BadRequest(response.Error) : Ok();
     }
 
     [HttpPut("{id}/enrollments/{enrollmentNumber}")]
@@ -74,20 +68,19 @@ public class StudentsController : ControllerBase
     {
         var command = new StudentTransferCommand
         {
-            Id = id, 
-            EnrollmentNumber = enrollmentNumber, 
-            Course = request.Course, 
+            Id = id,
+            EnrollmentNumber = enrollmentNumber,
+            Course = request.Course,
             Grade = request.Grade
         };
         var response = await _mediator.Send(command);
 
-        return response.IsFailure ?
-            BadRequest(response.Error) :
-            Ok(response.Value);
+        return response.IsFailure ? BadRequest(response.Error) : Ok();
     }
 
     [HttpPost("{id}/enrollments/{enrollmentNumber}/deletion")]
-    public async Task<IActionResult> Disenroll(Guid id, int enrollmentNumber, [FromBody] StudentDisenrollmentRequest request)
+    public async Task<IActionResult> Disenroll(Guid id, int enrollmentNumber,
+        [FromBody] StudentDisenrollmentRequest request)
     {
         var command = new StudentDisenrollmentCommand()
         {
@@ -96,10 +89,8 @@ public class StudentsController : ControllerBase
             Comment = request.Comment
         };
         var response = await _mediator.Send(command);
-        
-        return response.IsFailure ? 
-            BadRequest(response.Error) : 
-            Ok(response.Value);
+
+        return response.IsFailure ? BadRequest(response.Error) : Ok();
     }
 
     [HttpPut("{id}")]
@@ -113,8 +104,6 @@ public class StudentsController : ControllerBase
         };
         var response = await _mediator.Send(command);
 
-        return response.IsFailure ? 
-            BadRequest(response.Error) : 
-            Ok(response.Value);
+        return response.IsFailure ? BadRequest(response.Error) : Ok();
     }
 }

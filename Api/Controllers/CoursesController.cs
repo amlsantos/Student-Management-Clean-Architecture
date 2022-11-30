@@ -49,6 +49,6 @@ public class CoursesController : ControllerBase
         var command = new CreateCourseCommand { Name = request.Name, Credits = request.Credits };
         var response = await _mediator.Send(command);
 
-        return Ok(response);
+        return response.IsFailure ? BadRequest(response.Error) : Ok();
     }
 }
