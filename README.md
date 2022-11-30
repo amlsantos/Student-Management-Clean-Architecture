@@ -12,7 +12,7 @@ We are also using some functional programing concepts such as:
 > The application is an API for a student management system. Here's the domain model of this system. This is the main class in our model, Student. It consists of a name, email, collection of enrollments, and a collection of disenrollment comments. A student can have up to two enrollments in courses. Each enrollment has a grade: either A, B, C, D, or F. Whenever the user deletes an enrollment, he or she must specify the reason why the student wants to discontinue taking this course. It means that when you create an enrollment, you must specify the student's grade, and when you delete one, you have to type in the comment from the student. The API exposes the standard CRUD operations: the standard create, read, update, and delete.
 
 ### Domain
-![Domain model](http://url/to/img.png)
+![Screenshot_19](https://user-images.githubusercontent.com/6472330/204677232-3a0959df-1154-4f2a-8815-7571a4699350.png)
 
 
 ### Persistence layer
