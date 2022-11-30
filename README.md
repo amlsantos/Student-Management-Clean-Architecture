@@ -11,6 +11,9 @@ We are also using some functional programing concepts such as:
 ### Context
 > The application is an API for a student management system. Here's the domain model of this system. This is the main class in our model, Student. It consists of a name, email, collection of enrollments, and a collection of disenrollment comments. A student can have up to two enrollments in courses. Each enrollment has a grade: either A, B, C, D, or F. Whenever the user deletes an enrollment, he or she must specify the reason why the student wants to discontinue taking this course. It means that when you create an enrollment, you must specify the student's grade, and when you delete one, you have to type in the comment from the student. The API exposes the standard CRUD operations: the standard create, read, update, and delete.
 
+### Domain
+![Domain model](http://url/to/img.png)
+
 
 ### Persistence layer
 We have 3 repositories, and we are using the **unit of work** pattern:
@@ -41,7 +44,6 @@ We have 3 repositories, and we are using the **unit of work** pattern:
 - PUT `/students/{id}` - updates a student by id
 - POST `/students/{id}/enrollments` - adds a student to a course
 - PUT `/students/{id}/enrollments/{enrollmentNumber}` - updates a student with a course
-- DELETE `/posts/{id}` - deletes a post by id
 - POST `/students/{id}/enrollments/{enrollmentNumber}/deletion` - deletes a student from a course
 
 #### Request validations (using Fluent Validation)
