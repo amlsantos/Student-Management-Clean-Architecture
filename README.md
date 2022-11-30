@@ -15,9 +15,9 @@ We are also using some functional programing concepts such as:
 ### Persistence layer
 We have 3 repositories, and we are using the **unit of work** pattern:
 
-- `StudentRepository` - finds all existing comments
-- `CourseRepository` - find the comment by id
-- `EnrollmenttRepository` - inserts a given comment
+- `StudentRepository`
+- `CourseRepository`
+- `EnrollmenttRepository`
 
 ### Api layer
 
@@ -51,11 +51,12 @@ We have 3 repositories, and we are using the **unit of work** pattern:
 - `Name` should not be empty
 - `Email` should not be empty
 
-**Course**
+**Enrollment**
 
 - `Id` should not be null
-- `Title` should not be empty
-- `Content` should not be empty
+- `Student` should not be empty
+- `Course` should not be empty
+- `Grade` should not be empty
 
 **Course**
 
