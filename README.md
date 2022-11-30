@@ -1,4 +1,5 @@
-#
+![build](https://github.com/santos-an/Student-Management-Clean-Architecture/actions/workflows/build.yml/badge.svg)
+![test](https://github.com/santos-an/Student-Management-Clean-Architecture/actions/workflows/test.yml/badge.svg)
 
 ## Introduction
 This is a sample Rest API, using **Clean Architecture**, **CQRS** and **Microsoft .NET 7**. 
