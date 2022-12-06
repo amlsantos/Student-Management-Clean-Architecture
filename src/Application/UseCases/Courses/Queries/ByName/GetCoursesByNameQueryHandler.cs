@@ -6,11 +6,11 @@ using MediatR;
 
 namespace Application.UseCases.Courses.Queries.ByName;
 
-public class GetCoursesQueryHandler : IQueryHandler<GetCourseByNameQuery, Result<GetCourseByNameResponse>>
+public class GetCoursesByNameQueryHandler : IQueryHandler<GetCourseByNameQuery, Result<GetCourseByNameResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetCoursesQueryHandler(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+    public GetCoursesByNameQueryHandler(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
     public async Task<Result<GetCourseByNameResponse>> Handle(GetCourseByNameQuery query, CancellationToken cancellationToken)
     {

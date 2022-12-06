@@ -27,6 +27,7 @@ public class TransferCommandHandler : ICommandHandler<StudentTransferCommand, Re
             return Result.Failure($"Grade is incorrect: '{command.Grade}'");
 
         var student = studentOrNothing.Value;
+        
         var enrollmentOrNothing = student.GetEnrollment(command.EnrollmentNumber);
         if (enrollmentOrNothing.HasNoValue)
             return Result.Failure($"No enrollment found with number '{command.EnrollmentNumber}'");

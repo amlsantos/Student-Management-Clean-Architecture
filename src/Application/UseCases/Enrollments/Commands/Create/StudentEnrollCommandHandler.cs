@@ -16,7 +16,7 @@ public class StudentEnrollCommandHandler : ICommandHandler<StudentEnrollCommand,
     {
         var maybeStudent = await _unitOfWork.Students.GetById(command.Id);
         if (maybeStudent.HasNoValue)
-            return Result.Failure($"No student found with Id '{command.Id}'");
+            return Result.Failure($"No student found with given Id: '{command.Id}'");
 
         var maybeCourse = await _unitOfWork.Courses.GetByName(command.Course);
         if (maybeCourse.HasNoValue)
