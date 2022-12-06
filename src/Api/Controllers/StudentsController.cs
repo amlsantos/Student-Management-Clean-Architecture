@@ -68,8 +68,7 @@ public class StudentsController : BaseController
     }
 
     [HttpPost("{id}/enrollments/{enrollmentNumber}/deletion")]
-    public async Task<IActionResult> Disenroll(Guid id, int enrollmentNumber,
-        [FromBody] StudentDisenrollmentRequest request)
+    public async Task<IActionResult> Disenroll(Guid id, int enrollmentNumber, [FromBody] StudentDisenrollmentRequest request)
     {
         var command = new StudentDisenrollmentCommand { Id = id, EnrollmentNumber = enrollmentNumber, Comment = request.Comment };
         var response = await _mediator.Send(command);
