@@ -2,9 +2,9 @@
 ![test](https://github.com/santos-an/Student-Management-Clean-Architecture/actions/workflows/test.yml/badge.svg)
 
 ## Introduction
-This is a sample Rest API, using **Clean Architecture**, **CQRS** and **Microsoft .NET 7**. 
+This is a sample API, using **Clean Architecture**, **CQRS** and **Microsoft .NET 7**. 
 
-We are also using some functional programing concepts such as: 
+We are using some **Functional Programing** paradigms, concepts such as: 
 - ``Maybe<T>`` - to avoid Nulls with the Maybe Type
 - ``Result`` - to handle failures and Input Errors in a Functional Way
 
@@ -77,3 +77,4 @@ This demo application uses the following technologies:
  - SQL Server 2022
  - MediatR 11.1
  - Fluent Validation 11.2
+ - Bogus 34.0
