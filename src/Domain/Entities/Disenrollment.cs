@@ -1,20 +1,19 @@
-﻿using StudentManagementSystem.Common;
+﻿using CSharpFunctionalExtensions;
 
 namespace StudentManagementSystem.Entities;
 
-public class Disenrollment: Entity
+public sealed class Disenrollment : Entity<Guid>
 {
-    public Guid StudentId { get; set; }
-    public virtual Student Student { get; protected set; }
+    public override Guid Id { get; protected set; }
+    public Guid StudentId { get; init; }
+    public Student Student { get; }
 
-    public Guid CourseId { get; set; }
-    public virtual Course Course { get; protected set; }
-    
-    public virtual DateTime DateTime { get; protected set; }
-    public virtual string Comment { get; protected set; }
+    public Guid CourseId { get; init; }
+    public Course Course { get; }
+    public DateTime DateTime { get; }
+    public string Comment { get; }
 
-    protected Disenrollment() { }
-
+    public Disenrollment() { }
     public Disenrollment(Student student, Course course, string comment) : this()
     {
         Student = student;

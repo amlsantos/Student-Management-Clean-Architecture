@@ -1,13 +1,18 @@
 using System.Text.Json.Serialization;
-using Api.Middleware;
+using Api.Middlewares;
+using Application;
 using Application.Behaviours;
 using Application.Interfaces.Persistence;
+using Infrastructure;
 using Infrastructure.Behaviours;
 using MediatR;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Persistence;
+using Persistence.Courses;
 using Persistence.Database;
-using Persistence.Repositories;
+using Persistence.Enrollments;
+using Persistence.Students;
 
 namespace Api;
 
@@ -19,8 +24,6 @@ public static class Program
 
         var services = builder.Services;
         ConfigureServices(services);
-        ConfigureDi(services);
-        ConfigureMediatr(services);
 
         var app = builder.Build();
         RunMigrations(app);
@@ -31,38 +34,21 @@ public static class Program
     
     private static void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContext<StudentDbContext>();
+        services.AddDbContext<SchoolDbContext>();
         services.AddControllers()
             .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options => options.CustomSchemaIds(type => type.ToString()));
-    }
-
-    private static void ConfigureDi(IServiceCollection services)
-    {
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IStudentRepository, StudentRepository>();
-        services.AddScoped<IEnrollmentRepository,EnrollmentRepository>();
-        services.AddScoped<ICourseRepository, CourseRepository>();
-    }
-
-    private static void ConfigureMediatr(IServiceCollection services)
-    {
-        // Register MediatR Pipeline Behaviors
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RetryBehaviour<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-        
-        services.AddMediatR(assemblies);
-        services.AddFluentValidation(assemblies);
+        services.AddApplication();
+        services.AddPersistence();
+        services.AddInfrastructure();
     }
 
     private static void RunMigrations(WebApplication app)
     {
         using var scope = app.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<StudentDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
 
         context.Database.Migrate();
     }
