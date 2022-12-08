@@ -1,7 +1,6 @@
-using Application.Contracts;
+using Application.Courses.Queries.GetAll;
 using Application.Interfaces.Messaging;
 using Application.Interfaces.Persistence;
-using Application.UseCases.Courses.Queries.GetAll;
 using FluentAssertions;
 using Moq;
 using StudentManagementSystem.Entities;
@@ -25,7 +24,7 @@ public class GetCoursesQueryHandlerTests
     {
         // arrange
         var query = new GetCoursesQuery();
-        _unitOfWork.Setup(u => u.Courses.GetAll()).ReturnsAsync(new List<Course> { new() });
+        _unitOfWork.Setup(u => u.Courses.GetAll()).ReturnsAsync(new List<Course> { new("Course name", 0) });
 
         // act
         var actual = await _handler.Handle(query, CancellationToken.None);

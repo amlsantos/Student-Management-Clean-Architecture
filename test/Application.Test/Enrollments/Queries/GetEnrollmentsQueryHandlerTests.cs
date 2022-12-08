@@ -1,7 +1,6 @@
-using Application.Contracts;
+using Application.Enrollments.Queries.GetAll;
 using Application.Interfaces.Messaging;
 using Application.Interfaces.Persistence;
-using Application.UseCases.Enrollments.Queries.GetAll;
 using FluentAssertions;
 using Moq;
 using StudentManagementSystem.Entities;
@@ -13,7 +12,7 @@ public class GetEnrollmentsQueryHandlerTests
 {
     private readonly Mock<IUnitOfWork> _unitOfWork;
     private readonly IQueryHandler<GetEnrollmentsQuery, List<GetEnrollmentsResponse>> _handler;
-    
+
     public GetEnrollmentsQueryHandlerTests()
     {
         _unitOfWork = new Mock<IUnitOfWork>();
@@ -25,7 +24,7 @@ public class GetEnrollmentsQueryHandlerTests
     {
         // arrange
         var query = new GetEnrollmentsQuery();
-        var enrollment = new Enrollment(new Student(), new Course(), Grade.A);
+        var enrollment = new Enrollment(new Student("name", "email@student.com"), new Course("math", 10), Grade.A);
         _unitOfWork.Setup(u => u.Enrollments.GetAll()).ReturnsAsync(new List<Enrollment>() { enrollment });
 
         // act

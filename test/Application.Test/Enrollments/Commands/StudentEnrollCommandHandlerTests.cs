@@ -1,6 +1,6 @@
+using Application.Enrollments.Commands.Create;
 using Application.Interfaces.Messaging;
 using Application.Interfaces.Persistence;
-using Application.UseCases.Enrollments.Commands.Create;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
 using Moq;
@@ -44,7 +44,7 @@ public class StudentEnrollCommandHandlerTests
         var id = Guid.NewGuid(); var name = "course name";
         var command = new StudentEnrollCommand() { Id = id, Course = name };
        
-        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student()));
+        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student("name", "email@student.com")));
         _unitOfWork.Setup(u => u.Courses.GetByName(name)).ReturnsAsync(Maybe.None);
 
         // act
@@ -62,8 +62,8 @@ public class StudentEnrollCommandHandlerTests
         var id = Guid.NewGuid(); var name = "course name"; var grade = "aa";
         var command = new StudentEnrollCommand() { Id = id, Course = name , Grade = grade };
        
-        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student()));
-        _unitOfWork.Setup(u => u.Courses.GetByName(name)).ReturnsAsync(Maybe.From(new Course()));
+        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student("name", "email@student.com")));
+        _unitOfWork.Setup(u => u.Courses.GetByName(name)).ReturnsAsync(Maybe.From(new Course("course name", 0)));
 
         // act
         var actual = await _handler.Handle(command, CancellationToken.None);
@@ -80,8 +80,8 @@ public class StudentEnrollCommandHandlerTests
         var id = Guid.NewGuid(); var name = "course name"; var grade = "A";
         var command = new StudentEnrollCommand() { Id = id, Course = name , Grade = grade };
         
-        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student()));
-        _unitOfWork.Setup(u => u.Courses.GetByName(name)).ReturnsAsync(Maybe.From(new Course()));
+        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student("name", "email@student.com")));
+        _unitOfWork.Setup(u => u.Courses.GetByName(name)).ReturnsAsync(Maybe.From(new Course("course name", 0)));
         _unitOfWork.Setup(u => u.CommitAsync());
         
         // act

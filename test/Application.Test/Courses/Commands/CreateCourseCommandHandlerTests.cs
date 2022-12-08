@@ -1,6 +1,6 @@
+using Application.Courses.Commands.Create;
 using Application.Interfaces.Messaging;
 using Application.Interfaces.Persistence;
-using Application.UseCases.Courses.Commands.Create;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
 using Moq;

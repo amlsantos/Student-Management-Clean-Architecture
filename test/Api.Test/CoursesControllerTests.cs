@@ -1,11 +1,10 @@
-using Api.Contracts;
-using Api.Controllers;
+using Api.Courses;
+using Api.Courses.Requests;
 using Api.Utils;
-using Application.Contracts;
-using Application.UseCases.Courses.Commands.Create;
-using Application.UseCases.Courses.Queries.ById;
-using Application.UseCases.Courses.Queries.ByName;
-using Application.UseCases.Courses.Queries.GetAll;
+using Application.Courses.Commands.Create;
+using Application.Courses.Queries.ById;
+using Application.Courses.Queries.ByName;
+using Application.Courses.Queries.GetAll;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
 using MediatR;

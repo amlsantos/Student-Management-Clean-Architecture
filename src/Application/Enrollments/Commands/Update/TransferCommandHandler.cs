@@ -34,7 +34,7 @@ public class TransferCommandHandler : ICommandHandler<StudentTransferCommand, Re
         var course = courseOrNothing.Value;
         var enrollment = enrollmentOrNothing.Value;
         
-        enrollment.Update(course, grade);
+        enrollment.UpdateCourse(course, grade);
         await _unitOfWork.CommitAsync();
 
         return Result.Success();

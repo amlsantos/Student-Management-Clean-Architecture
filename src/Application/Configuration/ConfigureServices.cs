@@ -3,7 +3,7 @@ using MediatR;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application;
+namespace Application.Configuration;
 
 public static class ConfigureServices
 {

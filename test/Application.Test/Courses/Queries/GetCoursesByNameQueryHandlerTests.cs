@@ -1,7 +1,6 @@
-using Application.Contracts;
+using Application.Courses.Queries.ByName;
 using Application.Interfaces.Messaging;
 using Application.Interfaces.Persistence;
-using Application.UseCases.Courses.Queries.ByName;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
 using Moq;
@@ -25,10 +24,11 @@ public class GetCoursesByNameQueryHandlerTests
     public async Task Handle_FindsCourseAndSucceeds_ReturnsSuccessResult()
     {
         // arrange
-        var query = new GetCourseByNameQuery { Name = "course name" };
+        var courseName = "course name";
+        var query = new GetCourseByNameQuery { Name = courseName };
         _unitOfWork
             .Setup(u => u.Courses.GetByName(It.IsAny<string>()))
-            .ReturnsAsync(Maybe.From(new Course { Name = query.Name }));
+            .ReturnsAsync(Maybe.From(new Course(courseName, 0)));
         
         // act
         var actual = await _handler.Handle(query, CancellationToken.None);

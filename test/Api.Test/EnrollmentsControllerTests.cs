@@ -1,7 +1,5 @@
-using Api.Controllers;
-using Application.Contracts;
-using Application.UseCases.Courses.Queries.GetAll;
-using Application.UseCases.Enrollments.Queries.GetAll;
+using Api.Enrollments;
+using Application.Enrollments.Queries.GetAll;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

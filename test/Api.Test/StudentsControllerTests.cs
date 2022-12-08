@@ -1,14 +1,13 @@
-using Api.Contracts;
-using Api.Controllers;
+using Api.Students;
+using Api.Students.Requests;
 using Api.Utils;
-using Application.Contracts;
-using Application.UseCases.Enrollments.Commands.Create;
-using Application.UseCases.Enrollments.Commands.Delete;
-using Application.UseCases.Enrollments.Commands.Update;
-using Application.UseCases.Students.Commands.Create;
-using Application.UseCases.Students.Commands.Delete;
-using Application.UseCases.Students.Commands.Update;
-using Application.UseCases.Students.Queries.GetAll;
+using Application.Enrollments.Commands.Create;
+using Application.Enrollments.Commands.Delete;
+using Application.Enrollments.Commands.Update;
+using Application.Students.Commands.Create;
+using Application.Students.Commands.Delete;
+using Application.Students.Commands.Update;
+using Application.Students.Queries.GetAll;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
 using MediatR;
@@ -204,7 +203,7 @@ public class StudentsControllerTests
     {
         // arrange
         var id = Guid.NewGuid(); var enrollmentNumber = 2; var request = new StudentTransferRequest();
-        var expected = Result.Failure("some error");
+        var expected = Result.Success();
 
         _mediator
             .Setup(m => m.Send(It.IsAny<StudentTransferCommand>(), It.IsAny<CancellationToken>()))

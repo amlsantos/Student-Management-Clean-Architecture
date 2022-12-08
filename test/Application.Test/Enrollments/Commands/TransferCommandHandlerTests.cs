@@ -1,6 +1,6 @@
+using Application.Enrollments.Commands.Update;
 using Application.Interfaces.Messaging;
 using Application.Interfaces.Persistence;
-using Application.UseCases.Enrollments.Commands.Update;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
 using Moq;
@@ -42,7 +42,7 @@ public class TransferCommandHandlerTests
         var id = Guid.NewGuid(); var course = string.Empty; 
         var command = new StudentTransferCommand { Id = id, Course = course };
         
-        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student()));
+        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student("student name", "student@email.com")));
         _unitOfWork.Setup(u => u.Courses.GetByName(course)).ReturnsAsync(Maybe.None);
 
         // act
@@ -60,8 +60,8 @@ public class TransferCommandHandlerTests
         var id = Guid.NewGuid(); var course = string.Empty; var grade = "aa";
         var command = new StudentTransferCommand { Id = id, Course = course, Grade = grade };
         
-        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student()));
-        _unitOfWork.Setup(u => u.Courses.GetByName(course)).ReturnsAsync(Maybe.From(new Course()));
+        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student("student name", "student@email.com")));
+        _unitOfWork.Setup(u => u.Courses.GetByName(course)).ReturnsAsync(Maybe.From(new Course("course name", 0)));
 
         // act
         var actual = await _handler.Handle(command, CancellationToken.None);
@@ -77,9 +77,9 @@ public class TransferCommandHandlerTests
         // arrange
         var id = Guid.NewGuid(); var courseName = "math"; var grade = "A"; var enrollmentNumber = 20;
         
-        var student = new Student();
-        var course = new Course() { Name = courseName };
-        student.Enroll(new Course(), Grade.A);
+        var student = new Student("student name", "studnet@email.com");
+        var course = new Course(courseName, 0);
+        student.Enroll(course, Grade.A);
         
         var command = new StudentTransferCommand { Id = id, Course = courseName, Grade = grade, EnrollmentNumber = enrollmentNumber };
 
@@ -99,10 +99,10 @@ public class TransferCommandHandlerTests
     {
         // arrange
         var id = Guid.NewGuid(); var courseName = "math"; var grade = "A"; var enrollmentNumber = 0;
-        var student = new Student();
-        var course = new Course { Name = courseName };
+        var student =  new Student("student name", "studnet@email.com");
+        var course = new Course(courseName, 0);
         
-        student.Enroll(new Course(), Grade.A);
+        student.Enroll(course, Grade.A);
         
         var command = new StudentTransferCommand { Id = id, Course = courseName, Grade = grade, EnrollmentNumber = enrollmentNumber };
 

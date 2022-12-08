@@ -6,7 +6,7 @@ public sealed class Enrollment : Entity<Guid>
 {
     public override Guid Id { get; protected set; }
     public Guid StudentId { get; init; }
-    public Student Student { get; }
+    public Student Student { get; private set; }
     public Guid CourseId { get; init; }
     public Course Course { get; private set; }
     public Grade Grade { get; set; }
@@ -21,7 +21,12 @@ public sealed class Enrollment : Entity<Guid>
         Grade = grade;
     }
 
-    public void Update(Course course, Grade grade)
+    public void UpdateStudent(Student student)
+    {
+        Student = student;
+    }
+    
+    public void UpdateCourse(Course course, Grade grade)
     {
         Course = course;
         Grade = grade;

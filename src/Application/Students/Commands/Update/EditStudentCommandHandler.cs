@@ -17,7 +17,7 @@ public class EditStudentCommandHandler : ICommandHandler<EditStudentCommand, Res
             return Result.Failure($"No student found for Id {request.Id}");
 
         var student = maybe.Value;
-        student.Update(request.Name, request.Email);
+        student.UpdateDetails(request.Name, request.Email);
         
         await _unitOfWork.CommitAsync();
         return Result.Success();

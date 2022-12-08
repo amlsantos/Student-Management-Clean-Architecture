@@ -1,6 +1,6 @@
+using Application.Enrollments.Commands.Delete;
 using Application.Interfaces.Messaging;
 using Application.Interfaces.Persistence;
-using Application.UseCases.Enrollments.Commands.Delete;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
 using Moq;
@@ -42,7 +42,7 @@ public class StudentDisenrollmentCommandHandlerTests
         var id = Guid.NewGuid(); var comment = string.Empty; 
         var command = new StudentDisenrollmentCommand { Id = id, Comment = comment };
         
-        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student()));
+        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student("name", "email@student.com")));
 
         // act
         var actual = await _handler.Handle(command, CancellationToken.None);
@@ -59,7 +59,7 @@ public class StudentDisenrollmentCommandHandlerTests
         var id = Guid.NewGuid(); var comment = "my comment"; 
         var command = new StudentDisenrollmentCommand { Id = id, Comment = comment };
         
-        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student()));
+        _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(new Student("name", "email@student.com")));
 
         // act
         var actual = await _handler.Handle(command, CancellationToken.None);
@@ -73,8 +73,12 @@ public class StudentDisenrollmentCommandHandlerTests
     public async Task Handle_Succeeds_ReturnsSuccessResult()
     {
         // arrange
-        var id = Guid.NewGuid(); var comment = "my comment";
-        var student = new Student(); student.Enroll(new Course(), Grade.A);
+        var id = Guid.NewGuid(); 
+        const string comment = "my comment";
+        
+        var student = new Student("name", "email@student.com"); 
+        student.Enroll(new Course("course name", 0), Grade.A);
+        
         var command = new StudentDisenrollmentCommand { Id = id, Comment = comment, EnrollmentNumber = 0 };
         
         _unitOfWork.Setup(u => u.Students.GetById(id)).ReturnsAsync(Maybe.From(student));

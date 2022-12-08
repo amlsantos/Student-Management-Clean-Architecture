@@ -1,18 +1,10 @@
 using System.Text.Json.Serialization;
 using Api.Middlewares;
-using Application;
-using Application.Behaviours;
-using Application.Interfaces.Persistence;
-using Infrastructure;
-using Infrastructure.Behaviours;
-using MediatR;
-using MediatR.Extensions.FluentValidation.AspNetCore;
+using Application.Configuration;
+using Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
-using Persistence.Courses;
+using Persistence.Configuration;
 using Persistence.Database;
-using Persistence.Enrollments;
-using Persistence.Students;
 
 namespace Api;
 

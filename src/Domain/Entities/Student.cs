@@ -24,7 +24,7 @@ public sealed class Student : Entity<Guid>
         Email = email;
     }
 
-    public void Update(string name, string email)
+    public void UpdateDetails(string name, string email)
     {
         Name = name;
         Email = email;
@@ -55,8 +55,8 @@ public sealed class Student : Entity<Guid>
         if (_enrollments.Count >= 2)
             return Result.Failure("Cannot have more than 2 enrollments");
 
-        // var enrollment = new Enrollment(this, course, grade);
-        // _enrollments.Add(enrollment);
+        var enrollment = new Enrollment(this, course, grade);
+        _enrollments.Add(enrollment);
         
         return Result.Success();
     }

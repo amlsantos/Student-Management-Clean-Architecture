@@ -2,7 +2,7 @@ using Infrastructure.Behaviours;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure;
+namespace Infrastructure.Configuration;
 
 public static class ConfigureServices
 {

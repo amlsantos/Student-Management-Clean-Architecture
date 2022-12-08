@@ -8,7 +8,8 @@ public static class SchoolDbInitializer
     static SchoolDbInitializer()
     {
         var studentFaker = new Faker<Student>()
-            .RuleFor(s => s.Id, f => Guid.NewGuid()).RuleFor(s => s.Name, f => f.Person.FullName)
+            .RuleFor(s => s.Id, f => Guid.NewGuid())
+            .RuleFor(s => s.Name, f => f.Person.FullName)
             .RuleFor(s => s.Email, f => f.Person.Email);
         Students = studentFaker.GenerateBetween(20, 60);
         

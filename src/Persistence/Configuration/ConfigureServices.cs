@@ -5,7 +5,7 @@ using Persistence.Database;
 using Persistence.Enrollments;
 using Persistence.Students;
 
-namespace Persistence;
+namespace Persistence.Configuration;
 
 public static class ConfigureServices
 {
