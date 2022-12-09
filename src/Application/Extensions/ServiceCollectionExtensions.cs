@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RetryBehaviour<,>));
 
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         

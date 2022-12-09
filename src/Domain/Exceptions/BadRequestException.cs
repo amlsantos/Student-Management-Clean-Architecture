@@ -1,6 +1,6 @@
 namespace StudentManagementSystem.Exceptions;
 
-public abstract class BadRequestException : ApplicationException
+public class BadRequestException : ApplicationException
 {
-    protected BadRequestException(string message) : base("Bad Request", message) { }
+    public BadRequestException(string title, string message, Exception inner) : base(title, message, inner) { }
 }

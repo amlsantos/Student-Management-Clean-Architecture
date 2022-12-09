@@ -17,7 +17,7 @@ public class TransferCommandHandlerTests
     public TransferCommandHandlerTests()
     {
         _unitOfWork = new Mock<IUnitOfWork>();
-        _handler = new TransferCommandHandler(_unitOfWork.Object);
+        _handler = new StudentTransferCommandHandler(_unitOfWork.Object);
     }
 
     [Fact]

@@ -6,7 +6,7 @@ namespace Application.Courses.Queries.GetAll;
 
 public record GetCoursesQuery : IQuery<List<GetCoursesResponse>>;
 
-public class GetCoursesQueryHandler : IQueryHandler<GetCoursesQuery, List<GetCoursesResponse>>, IRetryableRequest<GetCoursesQuery, List<GetCoursesResponse>>
+public class GetCoursesQueryHandler : IQueryHandler<GetCoursesQuery, List<GetCoursesResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
