@@ -11,9 +11,9 @@ public static class WebApplicationExtensions
     {
         using var scope = app.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
-
+    
         context.Database.Migrate();
-
+    
         return app;
     }
 }
