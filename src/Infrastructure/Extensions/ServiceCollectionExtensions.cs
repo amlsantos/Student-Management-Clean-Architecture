@@ -2,9 +2,9 @@ using Infrastructure.Behaviours;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Configuration;
+namespace Infrastructure.Extensions;
 
-public static class ConfigureServices
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {

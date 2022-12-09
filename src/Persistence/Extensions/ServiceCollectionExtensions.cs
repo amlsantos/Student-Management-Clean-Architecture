@@ -5,12 +5,14 @@ using Persistence.Database;
 using Persistence.Enrollments;
 using Persistence.Students;
 
-namespace Persistence.Configuration;
+namespace Persistence.Extensions;
 
-public static class ConfigureServices
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services)
     {
+        services.AddDbContext<SchoolDbContext>();
+        
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<IEnrollmentRepository,EnrollmentRepository>();

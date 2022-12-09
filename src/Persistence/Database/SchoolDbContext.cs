@@ -9,10 +9,10 @@ namespace Persistence.Database;
 
 public class SchoolDbContext : DbContext
 {
-    public DbSet<Course> Courses { get; set; }
-    public DbSet<Student> Students { get; set; }
-    public DbSet<Enrollment> Enrollments { get; set; }
-    public DbSet<Disenrollment> Disenrollments { get; set; }
+    public virtual DbSet<Course> Courses { get; set; }
+    public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<Enrollment> Enrollments { get; set; }
+    public virtual DbSet<Disenrollment> Disenrollments { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

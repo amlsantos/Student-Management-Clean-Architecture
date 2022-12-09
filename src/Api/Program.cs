@@ -1,10 +1,8 @@
 using System.Text.Json.Serialization;
 using Api.Middlewares;
-using Application.Configuration;
-using Infrastructure.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Persistence.Configuration;
-using Persistence.Database;
+using Application.Extensions;
+using Infrastructure.Extensions;
+using Persistence.Extensions;
 
 namespace Api;
 
@@ -13,8 +11,8 @@ public static class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
         var services = builder.Services;
+        
         ConfigureServices(services);
 
         var app = builder.Build();
@@ -26,7 +24,6 @@ public static class Program
     
     private static void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContext<SchoolDbContext>();
         services.AddControllers()
             .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         services.AddEndpointsApiExplorer();
@@ -37,14 +34,8 @@ public static class Program
         services.AddInfrastructure();
     }
 
-    private static void RunMigrations(WebApplication app)
-    {
-        using var scope = app.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
+    private static void RunMigrations(WebApplication app) => app.RunMigrations();
 
-        context.Database.Migrate();
-    }
-    
     private static void ConfigureApp(WebApplication app)
     {
         if (app.Environment.IsDevelopment())

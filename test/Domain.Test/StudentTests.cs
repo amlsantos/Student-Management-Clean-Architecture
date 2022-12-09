@@ -46,7 +46,7 @@ public class StudentTests
     }
 
     [Fact]
-    public void GetEnrollment_InvalidNumber_ReturnsNone()
+    public void GetEnrollment_WithInvalidIndex_ReturnsNoValue()
     {
         // arrange
         var expected = true;
@@ -56,10 +56,11 @@ public class StudentTests
 
         // assert
         expected.Should().Be(actual.HasNoValue);
+        actual.HasNoValue.Should().Be(true);
     }
     
     [Fact]
-    public void GetEnrollment_ValidNumber_ReturnsEnrollment()
+    public void GetEnrollment_WithValidIndex_ReturnsEnrollment()
     {
         // arrange
         var expected = true;

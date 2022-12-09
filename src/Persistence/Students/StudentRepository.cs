@@ -12,10 +12,7 @@ public class StudentRepository : IStudentRepository
 
     public StudentRepository(SchoolDbContext context) => _context = context;
 
-    public async Task<IEnumerable<Student>> GetAll()
-    {
-        return await _context.Students.ToListAsync();
-    }
+    public async Task<IEnumerable<Student>> GetAll() => await _context.Students.ToListAsync();
 
     public async Task<Maybe<Student>> GetById(Guid id)
     {
@@ -28,7 +25,7 @@ public class StudentRepository : IStudentRepository
         return Maybe<Student>.From(student);
     }
 
-    public async Task<IEnumerable<Student>> GetStudentsWithCourses(string? enrolledIn, int? numberOfCourses)
+    public async Task<IEnumerable<Student>> GetStudentsWithCourses(string enrolledIn, int? numberOfCourses)
     {
         var enrollments = await _context.Enrollments
             .Include(e => e.Course)

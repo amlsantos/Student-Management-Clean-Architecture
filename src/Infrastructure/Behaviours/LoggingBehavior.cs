@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
+using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -16,31 +17,47 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         var requestName = request.GetType().Name;
         var requestGuid = Guid.NewGuid().ToString();
         var requestNameWithGuid = $"{requestName} [{requestGuid}]";
-
-        _logger.LogInformation($"[START] {requestNameWithGuid}");
+        var stopwatch = Stopwatch.StartNew();
+        
         TResponse response = default;
 
-        var stopwatch = Stopwatch.StartNew();
         try
         {
-            try
-            {
-                _logger.LogInformation($"[PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(request)}");
-            }
-            catch (NotSupportedException)
-            {
-                _logger.LogInformation($"[Serialization ERROR] {requestNameWithGuid} Could not serialize the request.");
-            }
-
+            _logger.LogInformation($"[START] {requestNameWithGuid} {JsonSerializer.Serialize(request)}");
             response = await next();
+        }
+        catch (NotSupportedException)
+        {
+            _logger.LogWarning($"[Serialization ERROR] {requestNameWithGuid} Could not serialize the request.");
         }
         finally
         {
-            _logger.LogInformation($"[RESPONSE] {response.ToString()};");
-            stopwatch.Stop();
-            _logger.LogInformation($"[END] {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+            if (IsResult(response))
+            {
+                var result = (Result<object>)response;
+                if (result.IsSuccess)
+                    ShowSuccessResponse(result, stopwatch, requestNameWithGuid);
+                else if (result.IsFailure)
+                    ShowErrorResponse(result, stopwatch, requestNameWithGuid);
+            }
         }
 
         return response;
+    }
+
+    private static bool IsResult(TResponse? response) => response.GetType().Name.Contains(typeof(Result).Name);
+
+    private void ShowSuccessResponse(Result<object> result, Stopwatch stopwatch, string requestNameWithGuid)
+    {
+        _logger.LogInformation($"[RESPONSE] [SUCCESS] {requestNameWithGuid}; Result={result.Value};");
+        stopwatch.Stop();
+        _logger.LogInformation($"[RESPONSE] [TIME] {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+    }
+
+    private void ShowErrorResponse(Result<object> result, Stopwatch stopwatch, string requestNameWithGuid)
+    {
+        _logger.LogError($"[RESPONSE] [ERROR] {requestNameWithGuid}; Error={result.Error};");
+        stopwatch.Stop();
+        _logger.LogError($"[RESPONSE] [TIME] {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
     }
 }

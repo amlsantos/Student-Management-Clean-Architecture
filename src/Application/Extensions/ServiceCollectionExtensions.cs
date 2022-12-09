@@ -3,9 +3,9 @@ using MediatR;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.Configuration;
+namespace Application.Extensions;
 
-public static class ConfigureServices
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
