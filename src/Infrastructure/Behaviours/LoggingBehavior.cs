@@ -40,6 +40,8 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
                 else if (result.IsFailure)
                     ShowErrorResponse(result, stopwatch, requestNameWithGuid);
             }
+            
+            stopwatch.Stop();
         }
 
         return response;
@@ -50,14 +52,12 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
     private void ShowSuccessResponse(Result<object> result, Stopwatch stopwatch, string requestNameWithGuid)
     {
         _logger.LogInformation($"[RESPONSE] [SUCCESS] {requestNameWithGuid}; Result={result.Value};");
-        stopwatch.Stop();
         _logger.LogInformation($"[RESPONSE] [TIME] {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
     }
 
     private void ShowErrorResponse(Result<object> result, Stopwatch stopwatch, string requestNameWithGuid)
     {
         _logger.LogError($"[RESPONSE] [ERROR] {requestNameWithGuid}; Error={result.Error};");
-        stopwatch.Stop();
         _logger.LogError($"[RESPONSE] [TIME] {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
     }
 }

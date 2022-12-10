@@ -6,7 +6,7 @@ namespace Application.Courses.Queries.ByName;
 
 public record GetCourseByNameQuery : IQuery<Result<GetCourseByNameResponse>>
 {
-    public string Name { get; set; }
+    public string Name { get; init; }
 }
 
 public class GetCoursesByNameQueryHandler : IQueryHandler<GetCourseByNameQuery, Result<GetCourseByNameResponse>>

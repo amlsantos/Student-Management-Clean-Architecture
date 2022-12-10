@@ -6,7 +6,7 @@ namespace Application.Courses.Queries.ById;
 
 public record GetCourseByIdQuery : IQuery<Result<GetCourseByIdResponse>>
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 }
 
 public class GetCourseByIdQueryHandler : IQueryHandler<GetCourseByIdQuery, Result<GetCourseByIdResponse>>
